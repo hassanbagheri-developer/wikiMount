@@ -1,14 +1,10 @@
 package com.example.hassan.api.controller;
 
 import com.example.hassan.api.dto.UserAplicationOutPutDto;
+import com.example.hassan.api.dto.UserInputDto;
 import com.example.hassan.api.facade.UserFacade;
-import com.example.hassan.config.SecurityAgent;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,9 +24,22 @@ public class UsersController {
         return userFacade.getAllUsers();
     }
 
-    @GetMapping("/userDetails")
-    public String userDetails(Model model) {
-        model.addAttribute("user", SecurityAgent.getCurrentUser());
-        return "userDetails";
+    @GetMapping("/{id}")
+    public UserAplicationOutPutDto getUserById(@PathVariable Long id) {
+        return userFacade.getUserById(id);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserAplicationOutPutDto> updateUser(@PathVariable Long id, @RequestBody UserInputDto userDetails) {
+        return ResponseEntity.ok(userFacade.updateUser(id, userDetails));
+    }
+
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userFacade.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -2,7 +2,6 @@ package com.example.hassan.dal.entity;
 
 import com.example.hassan.config.jwt.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
