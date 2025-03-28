@@ -1,0 +1,53 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+/logs/hassan.log
+/logs/
+/logs/elastic_search.log
+/metabase_plugins/databricks.metabase-driver.jar
+/metabase_plugins/athena.metabase-driver.jar
+/metabase_plugins/bigquery-cloud-sdk.metabase-driver.jar
+/metabase_plugins/clickhouse.metabase-driver.jar
+/metabase_plugins/druid.metabase-driver.jar
+/metabase_plugins/druid-jdbc.metabase-driver.jar
+/metabase_plugins/hive-like.metabase-driver.jar
+/metabase_plugins/mongo.metabase-driver.jar
+/metabase_plugins/oracle.metabase-driver.jar
+/metabase_plugins/presto-jdbc.metabase-driver.jar
+/metabase_plugins/redshift.metabase-driver.jar
+/metabase_plugins/sample-database.db.mv.db
+/metabase_plugins/snowflake.metabase-driver.jar
+/metabase_plugins/sparksql.metabase-driver.jar
+/metabase_plugins/sqlite.metabase-driver.jar
+/metabase_plugins/sqlserver.metabase-driver.jar
+/metabase_plugins/vertica.metabase-driver.jar
