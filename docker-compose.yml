@@ -1,46 +1,39 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
-    container_name: elasticsearch
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
     environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false # Disable security for local testing
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Set Java heap size
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "3306:3306"
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.10.2
-    container_name: kibana
+  app:
+    image: my-spring-boot-app:latest
+    container_name: spring_app
+    restart: always
     depends_on:
-      - elasticsearch
+      - mysql
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydatabase?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
     ports:
-        - "5601:5601"
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.10.2
-    container_name: logstash
-    depends_on:
-      - elasticsearch
-    ports:
-      - "5044:5044" # For Filebeat or other inputs
-      - "9600:9600" # Logstash monitoring API
-    volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro # Logstash configuration
-      - ./logs:/usr/share/logs:ro # Directory containing your log file
+      - "8080:8080"
+    networks:
+      - mynetwork
 
 volumes:
-  elasticsearch_data:
-    driver: local
+  mysql_data:
+
+networks:
+  mynetwork:
