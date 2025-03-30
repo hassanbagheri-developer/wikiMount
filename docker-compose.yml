@@ -1,39 +1,37 @@
-version: '3.8'
-
+version: "3"
 services:
-  mysql:
+
+  mysqldb:
     image: mysql:8.0
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+    networks:
+      - springboot-db-net
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - mynetwork
-
-  app:
-    image: my-spring-boot-app:latest
-    container_name: spring_app
-    restart: always
-    depends_on:
-      - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydatabase?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: myuser
-      SPRING_DATASOURCE_PASSWORD: mypassword
+      - MYSQL_ROOT_PASSWORD=root
+
+
+    volumes:
+      - /data/mysql
+      - ./script/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  application:
+    build: .
     ports:
       - "8080:8080"
     networks:
-      - mynetwork
-
-volumes:
-  mysql_data:
+      - springboot-db-net
+    depends_on:
+      mysqldb:
+        condition: service_healthy  # Waits for MySQL healthcheck
+    volumes:
+      - /data/springboot-app
 
 networks:
-  mynetwork:
+  springboot-db-net:

@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS hassan;
+
+USE hassan;
+
+CREATE USER IF NOT EXISTS 'developer'@'%' IDENTIFIED BY 'Developer@123';
+
+GRANT ALL PRIVILEGES ON hassan.* TO 'developer'@'%';
+
+FLUSH PRIVILEGES;
