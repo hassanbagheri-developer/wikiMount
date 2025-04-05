@@ -24,9 +24,11 @@ jobs:
         distribution: 'temurin'
         java-version: '21'
 
-    - name: Build Docker Image
-      run: |
-        ./mvn clean compile
+    - name: Build Java Application
+      run: ./mvn clean compile
+ #   - name: Build Docker Image
+  #    run: |
+   #     ./mvn clean compile
 
     - name: Log in to DockerHub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
