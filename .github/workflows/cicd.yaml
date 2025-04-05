@@ -31,7 +31,7 @@ jobs:
    #     ./mvn clean compile
 
     - name: Log in to DockerHub
-      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      run: echo "${{ my_env.DOCKERHUB_TOKEN }}" | docker login -u "${{ my_env.DOCKERHUB_USERNAME }}" --password-stdin
 
     - name: Push Docker Image to DockerHub
       run: |
