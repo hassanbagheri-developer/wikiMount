@@ -26,7 +26,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        ./mvnw clean compile
+        ./mvn clean compile
 
     - name: Log in to DockerHub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
