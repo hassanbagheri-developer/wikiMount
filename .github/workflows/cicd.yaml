@@ -31,6 +31,7 @@ jobs:
     - name: build docker image
       run: |
         docker build -t ${{ env.IMAGE_NAME }} .
+        docker build -t ${{ env.IMAGE_NAME }}:1.0.${{ github.run_number }} .
 
     - name: Log in to DockerHub
       run: echo "${{ env.DOCKERHUB_TOKEN }}" | docker login -u "hassan233" --password-stdin
@@ -39,3 +40,4 @@ jobs:
       run: |
         #TAG_NAME="${{ secrets.ENVIRONMENT }}-backend-1.0.${{ github.run_number }}"
         docker push ${{ env.IMAGE_NAME }}:latest
+        docker push ${{ env.IMAGE_NAME }}:1.0.${{ github.run_number }}
