@@ -28,7 +28,7 @@ jobs:
     #  run: mvn clean compile
     - name: Build Docker Image
       run: |
-        ./mvnw clean compile spring-boot:build-image
+        ./mvn clean compile
 
     - name: Log in to DockerHub
       run: echo "${{ env.DOCKERHUB_TOKEN }}" | docker login -u "hassan233" --password-stdin
