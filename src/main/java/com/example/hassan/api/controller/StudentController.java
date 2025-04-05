@@ -62,7 +62,7 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/filterrrrrrrrrrrrrrrrrrrr")
+    @PostMapping("/filter")
     @PreAuthorize(value = "hasAnyAuthority('api.students.filter.filterStudents') ")
     public Page<StudentOutputDto> filterStudents(@Valid @RequestBody StudentModel filterDto,
                                                  @RequestParam(defaultValue = "0") int page,
